@@ -26,7 +26,8 @@ function transformWithCallbacks(file, operation) {
       console.log(`Bitmap Transformed: ${bitmap.newFile}`);
     });
 
-  });
+  })
+    .catch(err => console.log('File doesn\'t exist', err));
 }
 
 // TODO: Explain how this works (in your README)

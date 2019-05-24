@@ -5,7 +5,7 @@ const Bitmap = require('./lib/bitmap');
 
 // ------------------ GET TO WORK ------------------- //
 
-function transformWithCallbacks() {
+function transformWithCallbacks(file, operation) {
 
   fs.readFile(file, (err, buffer) => {
 
@@ -30,9 +30,9 @@ function transformWithCallbacks() {
 }
 
 // TODO: Explain how this works (in your README)
-const [file, operation] = process.argv.slice(2);
+const [fileToTransform, operationToPerform] = process.argv.slice(2);
 
-let bitmap = Bitmap(file);
+let bitmap = new Bitmap(fileToTransform);
 
-transformWithCallbacks();
+transformWithCallbacks(bitmap.file, operationToPerform);
 

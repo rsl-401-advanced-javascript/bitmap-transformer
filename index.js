@@ -1,39 +1,33 @@
 'use strict';
 
 const fs = require('fs');
+const util = require('util');
+
 const Bitmap = require('./lib/bitmap');
+const fsReadFile = util.promisify(fs.readFile);
+const fsWriteFile = util.promisify(fs.writeFile);
 
 // ------------------ GET TO WORK ------------------- //
 
-function transformWithCallbacks(file, operation) {
+async function transformBitMap(file, operation) {
 
-  fs.readFile(file, (err, buffer) => {
+  let buffer = await fsReadFile(file);
 
-    if (err) {
-      throw err;
-    }
+  bitmap.parse(buffer);
 
-    bitmap.parse(buffer);
+  bitmap.transform(operation);
 
-    bitmap.transform(operation);
+  // Note that this has to be nested!
+  // Also, it uses the bitmap's instance properties for the name and the new buffer
+  await fsWriteFile(bitmap.newFile, bitmap.buffer);
 
-    // Note that this has to be nested!
-    // Also, it uses the bitmap's instance properties for the name and the new buffer
-    fs.writeFile(bitmap.newFile, bitmap.buffer, (err, out) => {
-      if (err) {
-        throw err;
-      }
-      console.log(`Bitmap Transformed: ${bitmap.newFile}`);
-    });
-
-  })
-    .catch(err => console.log('File doesn\'t exist', err));
+  console.log(`Bitmap Transformed: ${bitmap.newFile}`);
 }
 
 // TODO: Explain how this works (in your README)
 const [fileToTransform, operationToPerform] = process.argv.slice(2);
 
-let bitmap = new Bitmap(fileToTransform);
+let bitmap = new Bitmap(`${__dirname}/assets/${fileToTransform}`);
 
-transformWithCallbacks(bitmap.file, operationToPerform);
+transformBitMap(bitmap.file, operationToPerform);
 

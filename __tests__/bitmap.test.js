@@ -33,4 +33,10 @@ describe('Transforming a bitmap', () => {
     bitmap.transform('flipH');
     expect(bitmap.newFile).toBeDefined();
   });
+
+  it('should have a different buffer than the original', async () => {
+    let transformedBuffer = await fsReadFile(`${__dirname}/../assets/baldy.flipH.bmp`);
+
+    expect(transformedBuffer).not.toStrictEqual(bitmap.buffer);
+  });
 });

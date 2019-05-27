@@ -27,3 +27,10 @@ describe('A created bitmap', () => {
     expect(bitmap.pixelBuffer).toBeDefined();
   });
 });
+
+describe('Transforming a bitmap', () => {
+  it('should create a new file', () => {
+    bitmap.transform('flipH');
+    expect(bitmap.newFile).toBeDefined();
+  });
+});

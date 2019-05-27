@@ -1,7 +1,7 @@
 ## Bitmap Transformer
 
 ## How to use
-- In your command line type `node . <FILE NAME> <TRANSFORM OPERATION>` 
+- In your command line type `node . <FILE NAME> <TRANSFORM OPERATION>`
 
 - Possible transforms include:
   - flipH
